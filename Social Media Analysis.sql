@@ -1,0 +1,1 @@
+SELECT * FROM social_media_usage.user_activty;
