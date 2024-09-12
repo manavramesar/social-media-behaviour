@@ -31,14 +31,14 @@ WHERE Profession = "driver";
 
 		-- What time of day are users most active on different platforms? --
 
-		SELECT Platform, Time as "Peak Time"
+		SELECT Platform, Time as "Peak Time", users
 		FROM(
-			SELECT Platform, DATE_FORMAT(Watch_TIME, '%H:%i') AS "Time", COUNT(*), ROW_NUMBER() OVER (PARTITION BY Platform ORDER BY COUNT(*) DESC) AS rnk
+			SELECT Platform, DATE_FORMAT(Watch_TIME, '%H:%i') AS "Time", COUNT(*) as users, ROW_NUMBER() OVER (PARTITION BY Platform ORDER BY COUNT(*) DESC) AS rnk
 			FROM user_activty
 			GROUP BY 1,2
 			ORDER BY 3 DESC, 1 ASC)
 		AS subquery
-        WHERE rnk = 1;
+       
         
 	-- Which device types (smartphone, tablet, computer) and operating systems are most popular among users on specific platforms?
 
@@ -67,5 +67,5 @@ WITH addiction_level AS (
 )
 SELECT Profession, Addiction_Level
 FROM addiction_level
-WHERE rnk = 1
+-- WHERE rnk = 1
 ORDER BY 2 DESC;
